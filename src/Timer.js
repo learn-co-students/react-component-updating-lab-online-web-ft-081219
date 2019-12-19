@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 
 class Timer extends Component {
+//class Timer extends PureComponent - would make shouldComponentUpdate unnecessary
   constructor() {
     super();
     this.timer = React.createRef();
@@ -10,7 +11,16 @@ class Timer extends Component {
     };
   }
 
-  //Your code here
+  //fires every time the component updates
+  componentDidUpdate() {
+    this.timer.current.style.color = '#' + Math.floor(Math.random() * 16777215).toString(16);
+  }
+
+  //fires just before a component commits to updating
+  shouldComponentUpdate(nextProps, nextState) {
+    if (this.state.time === nextState.time) return false
+    return true
+  }
 
   componentDidMount() {
     this.interval = setInterval(
